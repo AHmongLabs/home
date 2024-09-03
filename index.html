@@ -56,23 +56,42 @@
     <script>
         const notebookPage = document.querySelector('.notebook-page');
         let isDragging = false;
-        let startX, startY, initialX, initialY;
+        let startX, startY;
 
+        // Mouse events
         notebookPage.addEventListener('mousedown', startDragging);
         document.addEventListener('mousemove', drag);
         document.addEventListener('mouseup', stopDragging);
 
+        // Touch events
+        notebookPage.addEventListener('touchstart', startDragging);
+        document.addEventListener('touchmove', drag);
+        document.addEventListener('touchend', stopDragging);
+
         function startDragging(e) {
             isDragging = true;
-            startX = e.clientX - notebookPage.offsetLeft;
-            startY = e.clientY - notebookPage.offsetTop;
+            if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX - notebookPage.offsetLeft;
+                startY = e.touches[0].clientY - notebookPage.offsetTop;
+            } else {
+                startX = e.clientX - notebookPage.offsetLeft;
+                startY = e.clientY - notebookPage.offsetTop;
+            }
         }
 
         function drag(e) {
             if (!isDragging) return;
             e.preventDefault();
-            const newX = e.clientX - startX;
-            const newY = e.clientY - startY;
+            let clientX, clientY;
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            const newX = clientX - startX;
+            const newY = clientY - startY;
             notebookPage.style.left = `${newX}px`;
             notebookPage.style.top = `${newY}px`;
         }
