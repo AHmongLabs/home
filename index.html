@@ -5,98 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AHmongLabs</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            height: 100vh;
-            margin: 0;
-            font-family: 'Nunito', Arial, sans-serif;
-            font-size: 2em;
-            background-color: #f0f0f0;
-            overflow: hidden;
-        }
-        .notebook-page {
-            background-color: white;
-            padding: 20px 40px;
-            border-radius: 0 5px 5px 0;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            position: absolute;
-            cursor: move;
-            user-select: none;
-        }
-        .notebook-page::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #ff9999;
-            }
-        .pop-up {
-            color: #333;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-        }
-        /* Remove the popUp animation keyframes */
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="notebook-page">
-        <div class='pop-up'>
+        <div class="pop-up">
             <img src="logo.png" alt="AHmongLabs Logo" class="logo">
         </div>
     </div>
 
-    <script>
-        const notebookPage = document.querySelector('.notebook-page');
-        let isDragging = false;
-        let startX, startY;
-
-        // Mouse events
-        notebookPage.addEventListener('mousedown', startDragging);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDragging);
-
-        // Touch events
-        notebookPage.addEventListener('touchstart', startDragging);
-        document.addEventListener('touchmove', drag);
-        document.addEventListener('touchend', stopDragging);
-
-        function startDragging(e) {
-            isDragging = true;
-            if (e.type === 'touchstart') {
-                startX = e.touches[0].clientX - notebookPage.offsetLeft;
-                startY = e.touches[0].clientY - notebookPage.offsetTop;
-            } else {
-                startX = e.clientX - notebookPage.offsetLeft;
-                startY = e.clientY - notebookPage.offsetTop;
-            }
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-            e.preventDefault();
-            let clientX, clientY;
-            if (e.type === 'touchmove') {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-            const newX = clientX - startX;
-            const newY = clientY - startY;
-            notebookPage.style.left = `${newX}px`;
-            notebookPage.style.top = `${newY}px`;
-        }
-
-        function stopDragging() {
-            isDragging = false;
-        }
-
-        // Initial position
-        notebookPage.style.left = '50%';
-        notebookPage.style.top = '50%';
-        notebookPage.style.transform = 'translate(-50%, -50%)';
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
